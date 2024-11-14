@@ -2,6 +2,7 @@
 from fastapi import Request, FastAPI
 from pydantic import BaseModel
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware # Importiere CORS-Middleware
 
 class TodoCreate(BaseModel):
     id: int
@@ -16,6 +17,15 @@ class Todo(BaseModel):
 
 # Framework initializieren
 app = FastAPI()
+
+# CORS konfigurieren
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # erlaube alle Ursprünge
+    allow_credentials=True,
+    allow_methods=["*"], # erlaube HTTP-Methoden
+    allow_headers=["*"] # erlaube alle Arten von Headers
+)
 
 todos = []
 
